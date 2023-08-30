@@ -1,0 +1,38 @@
+package test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Greedy3 {
+
+	public static void main(String[] args) {
+		// 공포심 팀원짜기
+		
+		String n = "23122";
+		String[] splitN = n.split("");
+		int result = 0;
+		int count = 0;
+		
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		
+		for(int i = 0; i < splitN.length; i++) {
+			arr.add(Integer.parseInt(splitN[i]));
+		}
+		Collections.sort(arr);
+		
+		for(int i = 0; i<arr.size(); i++) {
+			count += 1;
+			
+			System.out.println("arr " + arr.get(i));
+			if( count >= arr.get(i)) {
+				result += 1;
+				count = 0;
+			}
+		}
+		
+		System.out.println("result " + result);
+		
+
+	}
+
+}

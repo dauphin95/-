@@ -1,0 +1,29 @@
+package test;
+
+public class Greedy2 {
+
+	public static void main(String[] args) {
+		
+		String n = "02984";
+		int result = Integer.parseInt(String.valueOf(n.charAt(0)));
+		
+		for(int i = 1; i < n.length(); i++) {
+			
+			int firstInt = Integer.parseInt(String.valueOf(n.charAt(i)));
+			System.out.println("숫자" + firstInt);
+			
+			if(firstInt >= 1 && result > 1) {
+				result = result * firstInt;
+				
+			}else {
+				result = result + firstInt;
+			}
+		
+		}
+		
+		System.out.println(result);
+		
+	}
+	
+}
+

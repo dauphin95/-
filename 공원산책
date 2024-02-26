@@ -1,0 +1,97 @@
+package Test;
+
+public class Park {
+
+    public static void main(String[] args){
+        String[] park = {"SOO","OXX","OOO"};
+        String[] routes = {"E 2","S 2","W 1"};
+        String[][] replacePark = new String[park.length][park[0].length()];
+
+        int[] temp = {0,0};
+
+        for(int i=0; i<park.length; i++){
+            replacePark[i] = park[i].split("");
+
+            if(park[i].contains("S")){
+                int start = park[i].indexOf("S");
+                temp = new int[]{i, start};
+            }
+        }
+        int[] answer = temp;
+
+        int h = park.length-1;
+        int w = park[0].length()-1;
+
+
+        for(int i =0; i< routes.length; i++){
+            Boolean tradeYN = false;
+            int n = Integer.parseInt(routes[i].substring(2));
+
+            if(routes[i].startsWith("E")){
+                for(int j=0; j<n; j++){
+                    temp = new int[]{temp[0], temp[1] + 1};
+
+                    if(temp[0] <= h && temp[0] >= 0
+                       && temp[1] <= w && temp[1] >= 0
+                       && !"X".equals( replacePark[temp[0]][temp[1]] )){
+                        tradeYN = true;
+                    }else{
+                        temp = answer;
+                        break;
+                    }
+
+                }
+            }else if(routes[i].startsWith("W")){
+                for(int j=0; j<n; j++){
+                    temp = new int[]{temp[0], temp[1] - 1};
+
+                    if(temp[0] <= h && temp[0] >= 0
+                       && temp[1] <= w && temp[1] >= 0
+                       && !"X".equals( replacePark[temp[0]][temp[1]] )){
+                        tradeYN = true;
+                    } else{
+                        temp = answer;
+                        break;
+                    }
+
+                }
+            }else if(routes[i].startsWith("S")){
+                for(int j=0; j<n; j++){
+                    temp = new int[]{temp[0] + 1, temp[1]};
+
+                    if(temp[0] <= h && temp[0] >= 0
+                        && temp[1] <= w && temp[1] >= 0
+                        && !"X".equals( replacePark[temp[0]][temp[1]] )){
+                        tradeYN = true;
+                    }else{
+                        temp = answer;
+                        break;
+                    }
+
+                }
+            }else if(routes[i].startsWith("N")){
+                for(int j=0; j<n; j++){
+                    temp = new int[]{temp[0] - 1, temp[1]};
+
+                    if(temp[0] <= h && temp[0] >= 0
+                        && temp[1] <= w && temp[1] >= 0
+                        && !"X".equals( replacePark[temp[0]][temp[1]] )){
+                        tradeYN = true;
+                    }else{
+                        temp = answer;
+                        break;
+                    }
+
+                }
+            }
+
+            if( tradeYN ){
+                answer = temp;
+            }
+        }
+
+        System.out.println(answer[0]);
+        System.out.println(answer[1]);
+    }
+
+}

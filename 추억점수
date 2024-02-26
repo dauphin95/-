@@ -1,0 +1,42 @@
+package Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Yearning {
+    public static void main(String[] args){
+
+        String[] name = new String[]{};
+        Integer[] yearning = new Integer[]{};
+        String[][] photo = new String[][]{};
+
+        name = new String[]{"kali", "mari", "don"};
+        yearning = new Integer[]{11, 1, 55};
+        photo = new String[][]{{"kali", "mari", "don"}
+                                ,{"pony", "tom", "teddy"}
+                                , {"con", "mona", "don"}};
+
+        Map<String, Integer> scoreMap = new HashMap<>();
+        for(int i =0; i< name.length; i++){
+            scoreMap.put(name[i], yearning[i]);
+        }
+
+        int[] result = new int[photo.length];
+        for(int i=0; i<photo.length; i++){
+            int score = 0;
+
+            for(int j=0; j<photo[i].length; j++){
+                score += scoreMap.getOrDefault(photo[i][j], 0);
+            }
+
+            result[i] = score;
+        }
+
+        for(int a : result){
+            System.out.println(a);
+
+        }
+
+    }
+
+}

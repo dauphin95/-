@@ -1,0 +1,32 @@
+package Test;
+
+public class ColorNeighbor {
+    public static void main(String[] args){
+
+        String[][] board = {{"yellow", "green", "blue"}
+                            , {"blue", "green", "yellow"}
+                            , {"yellow", "blue", "blue"}};
+        int h = 0;
+        int w = 1;
+        int answer = 0;
+
+        int[][] direction = {{0,1}
+                            ,{0,-1}
+                            ,{1,0}
+                            ,{-1,0}};
+
+        int size = board.length;
+        String target = board[h][w];
+
+        for(int i=0; i<4; i++){
+            if(h+direction[i][0] > -1 && h+direction[i][0] < size
+                && w+direction[i][1] > -1 && w+direction[i][1] < size){
+                if(target.equals(board[h+direction[i][0]][w+direction[i][1]])){
+                    answer++;
+                }
+
+            }
+        }
+        System.out.println(answer);
+    }
+}

@@ -1,0 +1,43 @@
+package Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
+
+
+public class HOF {
+    public static void main(String[] args){
+        int k = 3;
+        int[] score = {10, 100, 20, 150, 1, 100, 200};
+        int[] answer = new int[score.length];
+
+        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> temp = new ArrayList<Integer>();
+
+        for(int i=0; i<score.length; i++){
+
+            if(i < k){
+                temp.add(score[i]);
+
+            }else{
+                if(temp.getFirst() < score[i]){
+                    temp.remove(0);
+                    temp.add(score[i]);
+                }
+            }
+
+            Collections.sort(temp);
+            list.add(temp.getFirst());
+
+        }
+
+        answer = list.stream().mapToInt(Integer::intValue).toArray();
+
+        Stream<Integer> stream = Arrays.stream(answer).boxed();
+        stream.forEach(System.out::println);
+
+
+    }
+}

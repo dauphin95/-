@@ -1,0 +1,62 @@
+package Test;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+public class Stream1 {
+    public static void main(String args[]){
+
+//         1. List에 저장된 단어들 중에서 단어의 길이가 2 이상인 경우에만, 모든 단어를 대문자로 변환하여 스페이스로 구분한 하나의 문자열로 합한 결과를 반환하여라.
+//         ex) ["Hello", "a", "Island", "b"] -> “H I”
+        List<String> words = Arrays.asList("TONY", "a", "hULK", "B", "america", "X", "nebula", "Korea");
+
+        String answer1 = words.stream().filter(o1 -> o1.length() > 2)
+                                      .map(o2 -> o2.substring(0,1).toUpperCase())
+                                      .collect(joining(" "));
+        System.out.println("answer1 " + answer1);
+
+//        2. 위와 같은 숫자 리스트가 있을 때 모든 숫자 쌍의 배열 리스트를 반환하여라.
+//        ex) numbers1 = [1,2,3], numbers2 = [3,4] -> [(1,3), (1,4), (2,3), (2,4), (3,3), (3,4)]
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3);
+        List<Integer> numbers2 = Arrays.asList(3, 4);
+
+        List<Integer[]> answer = numbers1.stream().flatMap(n -> numbers2.stream().map(m -> new Integer[]{n,m})).collect(toList());
+        answer.stream().map(Arrays::toString).forEach(System.out::println);
+
+        int answer2 = numbers1.stream().flatMap(n -> numbers2.stream().map(m -> new int[]{n*m})).mapToInt(a -> a[0]).max().orElse(0);
+        int answer22 = numbers1.stream().flatMap(n -> numbers2.stream().map(m -> new Integer[]{n,m})).mapToInt(a -> a[0] * a[1]).max().orElse(0);
+
+        System.out.println("answer2 " + answer2);
+
+//        3. 모든 문자열의 길이를 더한 결과를 출력하여라.
+        String[] strArr = {"aaa","bb","c","dddd"};
+
+        int answer3 = Arrays.stream(strArr).mapToInt(a -> a.length()).sum();
+        System.out.println("answer3 " + answer3);
+
+//        4. 문자열 중에서 가장 긴 것의 길이를 출력하시오
+        int answer4 = Arrays.stream(strArr).map(a -> new Integer[]{a.length()}).mapToInt(a -> a[0]).max().orElse(0);
+        int answer44 = Arrays.stream(strArr).mapToInt(String::length).max().orElse(0);
+        System.out.println("answer4 " +answer4);
+
+//        5. 두 개의 주사위를 굴려서 나온 눈의 합이 6인 경우를 모두 출력하시오.
+        Integer[] firstDice = {1,2,3,4,5,6};
+        Integer[] secondDice = {1,2,3,4,5,6};
+
+        Stream<Integer[]> aaa = Arrays.stream(firstDice).flatMap(a -> Arrays.stream(secondDice).map(b ->new Integer[]{a,b})).filter(arr -> arr[0]+arr[1]==6);
+        aaa.map(Arrays::toString).forEach(System.out::println);
+
+//        List<Integer[]> bbb = IntStream.rangeClosed(1, 6)
+//                                        .boxed()
+//                                        .flatMap(i -> IntStream.rangeClosed(1, 6).boxed().map(j -> new Integer[]{i, j}))
+//                                        .filter(arr -> arr[0] + arr[1] == 6)
+//                                        .collect(Collectors.toList());
+//
+//        bbb.stream().map(Arrays::toString).forEach(System.out::println);
+
+    }
+}

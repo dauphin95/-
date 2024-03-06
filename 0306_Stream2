@@ -1,0 +1,135 @@
+package Test;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
+
+public class Stream2 {
+    public static void main(String args[]){
+
+//         1. List에 저장된 단어들 중에서 단어의 길이가 2 이상인 경우에만, 모든 단어를 대문자로 변환하여 스페이스로 구분한 하나의 문자열로 합한 결과를 반환하여라.
+//         ex) ["Hello", "a", "Island", "b"] -> “H I”
+        List<String> words = Arrays.asList("TONY", "a", "hULK", "B", "america", "X", "nebula", "Korea");
+
+        List<String> answer1 = words.stream().filter(a -> a.length() > 2).map(b -> b.substring(0,1).toUpperCase()).collect(Collectors.toList());
+        answer1.stream().forEach(System.out::println);
+
+//        2. 위와 같은 숫자 리스트가 있을 때 모든 숫자 쌍의 배열 리스트를 반환하여라.
+//        ex) numbers1 = [1,2,3], numbers2 = [3,4] -> [(1,3), (1,4), (2,3), (2,4), (3,3), (3,4)]
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3);
+        List<Integer> numbers2 = Arrays.asList(3, 4);
+
+        List<Integer[]> answer2 = numbers1.stream().flatMap(a -> numbers2.stream().map(b -> new Integer[]{a,b})).collect(Collectors.toList());
+        answer2.stream().map(Arrays::toString).forEach(System.out::println);
+
+        List<Integer[]> answer22 = numbers1.stream().flatMap(a -> numbers2.stream().map(b -> new Integer[]{a*b})).collect(Collectors.toList());
+        answer22.stream().map(Arrays::toString).forEach(System.out::println);
+
+        int answer222 = numbers1.stream().flatMap(a -> numbers2.stream().map(b -> new Integer[]{a,b})).mapToInt(c -> c[0]*c[1]).max().orElse(0);
+        System.out.println("answer222 " + answer222);
+
+//        3. 모든 문자열의 길이를 더한 결과를 출력하여라.
+        String[] strArr = {"aaa","bb","c","dddd"};
+
+        int answer3 = Arrays.stream(strArr).mapToInt(String::length).sum();
+        System.out.println("answer3 " + answer3);
+
+//        4. 문자열 중에서 가장 긴 것의 길이를 출력하시오
+        int answer4 = Arrays.stream(strArr).mapToInt(String::length).max().orElse(0);
+        System.out.println("answer4 " + answer4);
+
+//        5. 두 개의 주사위를 굴려서 나온 눈의 합이 6인 경우를 모두 출력하시오.
+        Integer[] firstDice = {1,2,3,4,5,6};
+        Integer[] secondDice = {1,2,3,4,5,6};
+
+        List<Integer[]> answer5 = Arrays.stream(firstDice).flatMap(a -> Arrays.stream(secondDice).map(b -> new Integer[]{a,b})).filter(c -> c[0]+c[1] == 6).collect(Collectors.toList());
+        answer5.stream().map(Arrays::toString).forEach(System.out::println);
+
+//        6. Stream_student
+        Stream_Student[] stuArr = new Stream_Student[]{
+                new Stream_Student("나자바", true, 1, 1, 300),
+                new Stream_Student("김지미", false, 1, 1, 250),
+                new Stream_Student("김자바", true, 1, 1, 200),
+                new Stream_Student("이지미", false, 1, 2, 150),
+                new Stream_Student("남자바", true, 1, 2, 100),
+                new Stream_Student("안지미", false, 1, 2, 50),
+                new Stream_Student("황지미", false, 1, 3, 100),
+                new Stream_Student("강지미", false, 1, 3, 150),
+                new Stream_Student("이자바", true, 1, 3, 200),
+                new Stream_Student("나자바", true, 2, 1, 300),
+                new Stream_Student("김지미", false, 2, 1, 250),
+                new Stream_Student("김자바", true, 2, 1, 200),
+                new Stream_Student("이지미", false, 2, 2, 150),
+                new Stream_Student("남자바", true, 2, 2, 100),
+                new Stream_Student("안지미", false, 2, 2, 50),
+                new Stream_Student("황지미", false, 2, 3, 100),
+                new Stream_Student("강지미", false, 2, 3, 150),
+                new Stream_Student("이자바", true, 2, 3, 200)
+        };
+
+//      6. stuArr에서 불합격(150점 미만)한 학생의 수를 남자와 여자로 구별하여라. (Boolean, List)
+        List<Stream_Student> male = Arrays.stream(stuArr).filter(a -> a.getScore() < 150 && a.isMale()).collect(Collectors.toList());
+        List<Stream_Student> female = Arrays.stream(stuArr).filter(a -> a.getScore() < 150 && !a.isMale()).collect(Collectors.toList());
+
+        male.stream().forEach(System.out::println);
+        female.stream().forEach(System.out::println);
+
+        Map<Boolean, List<Stream_Student>> aa = Arrays.stream(stuArr)
+                .filter(s -> s.getScore() < 150)
+                .collect(groupingBy(Stream_Student::isMale));
+
+        //각 반별 총점을 학년 별로 나누어 구하여라 (Map<Integer, Map<Integer, Integer>>)
+        Map<Integer, Map<Integer, Integer>>  bb = Arrays.stream(stuArr)
+                .collect(groupingBy(Stream_Student::getHak, groupingBy(Stream_Student::getBan, summingInt(Stream_Student::getScore))));
+
+        System.out.println(bb);
+
+        // 7. trader
+        Stream_Trader kyu = new Stream_Trader("Kyu", "Seoul");
+        Stream_Trader ming = new Stream_Trader("Ming", "Gyeonggi");
+        Stream_Trader hyuk = new Stream_Trader("Hyuk", "Incheon");
+        Stream_Trader hwan = new Stream_Trader("hwan", "Seoul");
+        List<Stream_Transaction> transaction = Arrays.asList(
+                new Stream_Transaction(kyu, 2019, 30000),
+                new Stream_Transaction(kyu, 2020, 12000),
+                new Stream_Transaction(ming, 2020, 40000),
+                new Stream_Transaction(ming, 2020, 7100),
+                new Stream_Transaction(hyuk, 2019, 5900),
+                new Stream_Transaction(hwan, 2020, 4900)
+        );
+
+        // 7.1 2020년에 일어난 모든 거래 내역을 찾아 거래값을 기준으로 오름차순 정렬하라.
+        List<Stream_Transaction> answer71 = transaction.stream().filter(a -> a.getYear() == 2020).sorted((b1,b2) -> b2.getValue() - b1.getValue()).collect(Collectors.toList());
+        answer71.stream().forEach(System.out::println);
+
+        // 7.2 거래 내역이 있는 거래자가 근무하는 모든 도시를 중복 없이 나열하라.
+        List<String> answer72 = transaction.stream().map(a -> a.getTrader().getCity()).distinct().collect(Collectors.toList());
+        answer72.stream().forEach(System.out::println);
+
+        // 7.3 서울에서 근무하는 모든 거래자를 찾아서 이름순서대로 정렬하라.
+        List<Stream_Trader> answer73 =  transaction.stream().map(Stream_Transaction::getTrader).filter(a->"Seoul".equals(a.getCity())).sorted(Comparator.comparing(Stream_Trader::getName)).collect(Collectors.toList());
+        answer73.stream().forEach(System.out::println);
+
+        // 7.4 모든 거래자의 이름을 구분자(",")로 구분하여 정렬하라.
+        String answer74 = transaction.stream().map(a -> a.getTrader().getName()).distinct().collect(Collectors.joining(","));
+        System.out.println("answer74 " + answer74);
+
+        // 7.5 부산에 거래자가 있는지를 확인하라.
+        Boolean answer75 = transaction.stream().map(Stream_Transaction::getTrader).anyMatch(a->"Busan".equals(a.getCity()));
+        System.out.println("answer75 " +answer75);
+
+        // 7.6 서울에 거주하는 거래자의 모든 거래 금액을 구하라.
+        int answer76 = transaction.stream().filter(a -> "Seoul".equals(a.getTrader().getCity())).mapToInt(b -> b.getValue()).sum();
+        System.out.println("answer76 " + answer76);
+
+        // 4.7 모든 거래 내역중에서 거래 금액의 최댓값과 최솟값을 구하라. 단, 최댓값은 reduce를 이용하고 최솟값은 stream의 min()을 이용하라.
+        Integer[] answer77 = new Integer[2];
+        answer77[0] = transaction.stream().mapToInt(Stream_Transaction::getValue).min().orElse(-1);
+        answer77[1] = transaction.stream().map(Stream_Transaction::getValue).reduce(Integer::max).orElse(-1);
+        Arrays.stream(answer77).forEach(System.out::println);
+    }
+}

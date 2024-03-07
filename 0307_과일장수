@@ -1,0 +1,31 @@
+package Test;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Fruit {
+    public static void main(String args[]){
+        int k = 4;
+        int m = 3;
+        int[] score = {4, 1, 2, 2, 4, 4, 4, 4, 1, 2, 4, 2};
+        int answer = 0;
+
+        List<Integer> a = Arrays.stream(score).boxed().sorted().collect(Collectors.toList());
+
+        for(int i =a.size(); i>=m; i-= m){
+            int min = a.subList(i-m,i).stream().mapToInt(b->b).min().orElse(0);
+            answer = answer + (min*m);
+        }
+
+        System.out.println(answer);
+
+//        다른 풀이
+//        Arrays.sort(score);
+//
+//        for(int i = score.length; i >= m; i -= m){
+//            answer += score[i - m] * m;
+//        }
+
+    }
+}

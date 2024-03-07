@@ -1,0 +1,26 @@
+package Test;
+
+public class Coke {
+    public static void main(String[] args){
+        int a = 2; int b=1;  int n=20;
+        int answer = 0;
+
+        int leftOver =0;
+        int count=0;
+
+        while(n >= a){
+            count = n/a;
+            leftOver = n%a;
+            n = (count*b) + leftOver;
+            answer = answer+ (count*b);
+        }
+
+        System.out.println(answer);
+
+//        다른 풀이
+//        while(n / a > 0) {
+//            answer += n / a * b;
+//            n = n / a * b + n % a;
+//        }
+    }
+}

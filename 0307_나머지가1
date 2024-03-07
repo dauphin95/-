@@ -1,0 +1,20 @@
+package Test;
+
+public class RemainOne {
+    public static void main(String[] args){
+        int n = 12;
+        int answer = 0;
+
+        for(int i=1; i<=n; i++){
+            if(n%i==1) {
+                answer = i;
+                break;
+            }
+        }
+
+        System.out.println(answer);
+
+//        다른 풀이
+//        IntStream.range(2, n).filter(i -> n % i == 1).findFirst().orElse(0);
+    }
+}

@@ -1,0 +1,62 @@
+package Test;
+
+import java.util.*;
+
+public class MBTI {
+    public static void main(String[] args){
+        String[] survey = {"TR", "RT", "TR"};
+        int[] choices = {7, 1, 3};
+        String answer = "";
+
+        Map<String,Integer> totalScore = new HashMap<>();
+        totalScore.put("R", 0);
+        totalScore.put("T", 0);
+        totalScore.put("C", 0);
+        totalScore.put("F", 0);
+        totalScore.put("J", 0);
+        totalScore.put("M", 0);
+        totalScore.put("A", 0);
+        totalScore.put("N", 0);
+
+        Map<String, String> character = new LinkedHashMap<>();
+        character.put("R", "T");
+        character.put("C", "F");
+        character.put("J", "M");
+        character.put("A", "N");
+
+        Map<Integer, Integer> scoreMap = new HashMap<>();
+        scoreMap.put(1,3);
+        scoreMap.put(2,2);
+        scoreMap.put(3,1);
+        scoreMap.put(4,0);
+        scoreMap.put(5,1);
+        scoreMap.put(6,2);
+        scoreMap.put(7,3);
+
+        for(int i=0; i<choices.length; i++){
+            int score = scoreMap.get(choices[i]);
+            if(choices[i] < 4){
+                totalScore.replace(survey[i].substring(0,1), totalScore.get(survey[i].substring(0,1))+score);
+            }else if(choices[i] > 4){
+                totalScore.replace(survey[i].substring(1,2), totalScore.get(survey[i].substring(1,2))+score);
+            }
+        }
+        String[] keys = character.keySet().toArray(new String[0]);
+        for(int i=0; i<character.size(); i++){
+            int a = totalScore.get(keys[i]);
+            int b = totalScore.get(character.get(keys[i]));
+            if(totalScore.get(keys[i]) >= totalScore.get(character.get(keys[i]))){
+                answer += keys[i];
+            }else {
+                answer += character.get(keys[i]);
+            }
+        }
+
+        System.out.println(answer);
+
+
+
+
+
+    }
+}

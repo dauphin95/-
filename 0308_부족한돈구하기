@@ -1,0 +1,27 @@
+package Test;
+
+public class LackMoney {
+    public static void main(String[] args){
+        int price = 3;
+        int money = 20;
+        int count = 4;
+
+        long answer = -1;
+        long total = 0;
+
+        for(int i=1; i<=count; i++){
+            total += i*price;
+        }
+
+        if(total > money){
+            answer = total - money;
+        }else{
+            answer = 0;
+        }
+
+        System.out.println(answer);
+
+//        다른 풀이
+//        Math.max(price * (count * (count + 1) / 2) - money, 0);
+    }
+}

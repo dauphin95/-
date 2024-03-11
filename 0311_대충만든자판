@@ -1,0 +1,39 @@
+package Test;
+
+import java.util.Arrays;
+import java.util.Map;
+
+public class KeyBoard {
+    public static void main(String[] args){
+        String[] keymap = {"AGZ", "BSSS"};
+        String[] targets = {"ASA","BGZ"};
+
+        int[] answer = new int[targets.length];
+
+        for(int i=0; i<targets.length; i++){
+            answer[i] = 0;
+
+            for(int j=0; j<targets[i].length(); j++){
+                int count = Integer.MAX_VALUE;
+
+                for(int h=0; h<keymap.length; h++){
+                    int aaa = keymap[h].indexOf(targets[i].charAt(j));
+                    if(aaa == -1){
+                        aaa = Integer.MAX_VALUE;
+                    }
+                    count = Math.min(aaa, count);
+                }
+
+                if(count == Integer.MAX_VALUE){
+                    answer[i] = -1;
+                    break;
+                }else{
+                    answer[i] += count+1;
+                }
+
+            }
+        }
+
+        Arrays.stream(answer).forEach(System.out::println);
+    }
+}

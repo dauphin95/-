@@ -1,0 +1,25 @@
+package Test;
+
+public class CountPY {
+    public static void main(String[] args){
+        String s = "PyoooPy";
+        String[] sChar = s.toUpperCase().split("");
+        boolean answer = true;
+
+         int countP = 0;
+         int countY = 0;
+
+         for(String a : sChar){
+             if("P".equals(a)) countP++;
+             if("Y".equals(a)) countY++ ;
+         }
+
+        if(countY != countP) answer = false;
+
+        System.out.println(answer);
+        
+//        다른 풀이
+//        return s.chars().filter( e -> 'P'== e).count() == s.chars().filter( e -> 'Y'== e).count();
+
+    }
+}

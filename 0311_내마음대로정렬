@@ -1,0 +1,18 @@
+package Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Collectors;
+
+public class WordSort {
+    public static void main(String[] args){
+        String[] strings = {"abce", "abcd", "cdx"};
+        int n = 2;
+        String[] answer = new String[strings.length];
+
+        Collections.sort(Arrays.asList(strings));
+        answer = Arrays.stream(strings).sorted((a, b) -> a.charAt(n) - b.charAt(n)).collect(Collectors.toList()).toArray(new String[strings.length]);
+
+        Arrays.stream(answer).forEach(System.out::println);
+    }
+}

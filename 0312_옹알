@@ -1,0 +1,51 @@
+package Test;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
+
+public class Babbling {
+    public static void main(String[] args){
+        String[] babbling = {"ayaye", "uuuma", "ye", "yemawoo", "ayaa"};
+        int answer = 0;
+
+        String[] word = {"aya", "ye", "woo", "ma"};
+
+        for(int i=0; i<babbling.length; i++){
+            if(replace(word, babbling[i])){
+                answer++;
+            }
+        }
+        System.out.println(answer);
+
+    }
+
+    public static boolean replace(String[] word, String target){
+        boolean yn = false;
+
+        for(int i=0; i<word.length; i++){
+            if(target.contains(word[i])){
+                target = target.replaceAll(word[i]," ");
+            }
+
+            if(target.trim().isEmpty()){
+                yn = true;
+                break;
+            }
+        }
+        return yn;
+    }
+
+
+//    다른 풀이
+//    for(int i =0; i < babbling.length; i++) {
+//        babbling[i] = babbling[i].replaceAll("aya", "1");
+//        babbling[i] = babbling[i].replaceAll("woo", "1");
+//        babbling[i] = babbling[i].replaceAll("ye", "1");
+//        babbling[i] = babbling[i].replaceAll("ma", "1");
+//        babbling[i] = babbling[i].replaceAll("1", "");
+//        if(babbling[i].isEmpty()) {
+//            answer = answer + 1;
+//        }
+//    }
+
+}

@@ -1,0 +1,12 @@
+package Test;
+
+public class PhoneNum {
+    public static void main(String[] args){
+        String phone_number = "01033334444";
+
+        String answer = String.format("%" + phone_number.length() + "s", phone_number.substring(phone_number.length() - 4)).replace(" ", "*");
+
+        System.out.println(answer);
+
+    }
+}
